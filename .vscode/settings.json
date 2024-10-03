@@ -3,6 +3,7 @@
     "battilan",
     "cmath",
     "constness",
+    "cout",
     "cppreference",
     "ctest",
     "czvf",
@@ -17,7 +18,8 @@
     "redirezione",
     "SFML",
     "struct",
-    "SUBCASE"
+    "SUBCASE",
+    "Wextra"
   ],
   "cmake.configureOnOpen": false
 }
