@@ -1,5 +1,6 @@
 {
   "cSpell.words": [
+    "aarch",
     "battilan",
     "cmath",
     "constness",
@@ -19,6 +20,7 @@
     "SFML",
     "struct",
     "SUBCASE",
+    "SYSV",
     "Wextra"
   ],
   "cmake.configureOnOpen": false

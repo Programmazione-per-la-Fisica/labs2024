@@ -62,6 +62,13 @@ drwxr-xr-x  3 battilan  staff  96 27 Sep 10:04 ..
 >
 > :question: Ricordate a cosa servono le opzioni passate ai comandi `mkdir` ed `ls`?
 
+> [!WARNING]
+> D'ora in poi evitate di copiare e incollare testo dalla traccia del laboratorio, con l'eccezione dei **rari** casi
+> in cui vi verrà suggerito esplicitamente di farlo.
+
+> [!WARNING]
+> Ricordate che il simbolo `$` rappresenta il prompt e non va digitato assieme al comando.
+
 ## Primi passi
 
 Durante il corso utilizzeremo
@@ -122,7 +129,7 @@ $ code .
 > **Il comando** `code .` (digitato in questo modo all'interno della cartella di lavoro) ci permette di gestirne tutto
 > il contenuto come un unico progetto, quindi è **da preferire rispetto all'apertura di singoli file**.
 
-Poi creiamo un nuovo file vuoto (es. per ora utilizziamo l'interfaccia grafica), e salviamolo col nome `hello.cpp`.
+Poi creiamo un nuovo file vuoto (es. per ora utilizziamo l'interfaccia grafica, cioè clicchiamo sull'iconcina a "forma di foglio" in alto a sinistra nell'interfaccia di VSCode e poi su quella "a forma di foglio con un +"), e salviamolo col nome `hello.cpp`.
 
 > [!NOTE]
 > Qualora non l'aveste già fatto, probabilmente VSCode vi suggerirà di installare l'_extension pack_ per `C++`. Vi
@@ -189,6 +196,8 @@ $ g++ -Wall -Wextra hello.cpp -o hello
 > [!TIP]
 > Ricordiamo che chi utilizza macOS (e ha installato lo `gcc` tramite `brew`) dovrà avvalersi del comando `g++-14`
 > invece di `g++`.
+>
+> :exclamation: Utilizzate il tasto <kbd>TAB</kbd> per completare la digitazione del comando.
 
 > [!IMPORTANT]
 > Le opzioni `-Wall` e `-Wextra` abilitano messaggi di _warning_ opzionali che aiutano ad evidenziare problemi nel
@@ -233,6 +242,9 @@ all'oggetto.
 > [!NOTE]
 > Visual Studio Code è un editor molto potente, infatti potete notare che alcune linee rosse al di sotto di parti di
 > codice che probabilmente sono sbagliate.
+>
+> :exclamation: Attenti però, a volte anche Visual Studio Code potrebbe sbagliare, l'ultima parola spetta sempre al
+> compilatore!
 
 Provando a compilare ancora otterremo di nuovo un errore:
 
@@ -273,6 +285,20 @@ Hello world!
 > Notate come abbiamo anteposto il `.` (che indica la directory in cui ci troviamo) al fine di eseguire del comando.
 > Questo è necessario perché la _command line_, di default, va a cercare i comandi che le chiediamo di utilizzare solo
 > all'interno di una serie di cartelle create appositamente per contenere eseguibili.
+
+> [!TIP]
+> Provate ad utilizzare il comando `file`, discusso durante il secondo pre-laboratorio, per verificare quanto prodotto
+> dal compilatore:
+>
+> ```bash
+> $ file hello
+> hello: ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter
+> /lib/ld-linux-aarch64.so.1, BuildID[sha1]=f0b2388b532e79fe2b84dacb90d7b8e959a3cff0, for GNU/Linux 3.7.0, not stripped
+> ```
+>
+> :exclamation: I dettagli relativi all'output del comando appena eseguito dipendono dal processore e da altre
+> caratteristiche del sistema che ciascuno di voi utilizza, pertanto potrebbero variare. L'importante è verificare che
+> il programma compilato sia _eseguibile_.
 
 In molti casi è conveniente poter passare informazioni come input al programma durante la sua esecuzione. Modifichiamo
 il programma per fare sì che stampi su schermo una stringa che viene data in input:
@@ -385,3 +411,44 @@ Una lista (non esaustiva) potrebbe essere:
 > Un semplice errore di sintassi può produrre una lunga catena di messaggi dal compilatore, potrebbe essere necessario
 > scorrere il terminale per leggere tutto l'output (<kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>↑</kbd> e
 > <kbd>Control</kbd> + <kbd>Shift</kbd> + <kbd>↓</kbd>).
+
+Un altra attività opzionale, ma decisamente utile, è quella di imparare a usare i _package manager_ installati in WSL e
+mac OS: rispettivamente `apt` e `brew`.
+
+Quello che vi suggeriamo di fare è provare a installare il programma `tree`, che permette di visualizzare la
+struttura _ad albero_ di file e directory a partire da una data cartella.
+
+> [!TIP]
+> Prima di installare il programma vi consigliamo di provare i comandi: `apt search tree` e `apt info tree` (o
+> `brew search tree` e `brew info tree` per chi usa mac OS) per imparare come trovare un determinato pacchetto e
+> capirne il contenuto.
+
+Potete farlo eseguendo i comandi:
+
+**WSL**:
+
+```bash
+$ sudo apt install tree
+```
+
+**mac OS**:
+
+```zsh
+% brew install tree
+```
+
+Poi verificate il contenuto della cartella creata per contenere tutti i laboratori:
+
+```bash
+$ tree labs
+├── labs
+    └── lab1
+        ├── domath
+        ├── domath.cpp
+        ├── hello
+        ├── hello.cpp
+        ├── sum_a_b
+        ├── sum_a_b.cpp
+        ├── sum_n
+        └── sum_n.cpp
+```
