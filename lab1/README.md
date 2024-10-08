@@ -58,7 +58,7 @@ drwxr-xr-x  3 battilan  staff  96 27 Sep 10:04 ..
 > La scelta della strutture del nome della directory `pf_labs` è totalmente arbitraria, potete scegliere liberamente un
 > nome diverso in base alle vostre preferenze.
 >
-> :question: Il path `labs/lab1` è relativo o assoluto?
+> :question: Il path `pf_labs/lab1` è relativo o assoluto?
 >
 > :question: Ricordate a cosa servono le opzioni passate ai comandi `mkdir` ed `ls`?
 
@@ -440,8 +440,8 @@ $ sudo apt install tree
 Poi verificate il contenuto della cartella creata per contenere tutti i laboratori:
 
 ```bash
-$ tree labs
-├── labs
+$ tree pf_labs
+└── pf_labs
     └── lab1
         ├── domath
         ├── domath.cpp
