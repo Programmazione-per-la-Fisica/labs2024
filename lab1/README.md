@@ -129,7 +129,9 @@ $ code .
 > **Il comando** `code .` (digitato in questo modo all'interno della cartella di lavoro) ci permette di gestirne tutto
 > il contenuto come un unico progetto, quindi è **da preferire rispetto all'apertura di singoli file**.
 
-Poi creiamo un nuovo file vuoto (es. per ora utilizziamo l'interfaccia grafica, cioè clicchiamo sull'iconcina a "forma di foglio" in alto a sinistra nell'interfaccia di VSCode e poi su quella "a forma di foglio con un +"), e salviamolo col nome `hello.cpp`.
+Poi creiamo un nuovo file vuoto (es. per ora utilizziamo l'interfaccia grafica, cioè clicchiamo sull'iconcina a "forma
+di foglio" in alto a sinistra nell'interfaccia di VSCode e poi su quella "a forma di foglio con un +"), e salviamolo col
+nome `hello.cpp`.
 
 > [!NOTE]
 > Qualora non l'aveste già fatto, probabilmente VSCode vi suggerirà di installare l'_extension pack_ per `C++`. Vi
