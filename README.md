@@ -24,4 +24,8 @@ Per ogni laboratorio, **proporremo approfondimenti ed esercizi aggiuntivi** che 
 - [Primo laboratorio](lab1/README.md): _VSCode_, _clang-format_, sviluppo di semplici programmi e loro compilazione
 - [Secondo laboratorio](lab2/README.md): cicli `for` e `while`, funzioni, unit-testing (con _doctest_)
 
-In caso di dubbi, non esitate a chiedere suggerimento ai docenti in merito a come procedere.
+## Domande Frequenti
+
+Una lista di _Frequently Asked Questions_ (FAQs) relative attività di laboratorio è disponibile [qui](FAQ.md).
+
+In caso di ulteriori dubbi, non esitate a chiedere suggerimento ai docenti in merito a come procedere.
