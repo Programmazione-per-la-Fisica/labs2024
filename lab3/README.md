@@ -16,15 +16,15 @@ classi e strutture.
     - [Utilizzo di `SUBCASE`](#utilizzo-di-subcase)
     - [Soluzione](#soluzione)
   - [Consegna facoltativa del lavoro svolto](#consegna-facoltativa-del-lavoro-svolto)
-  - [Approfondimenti ed esercizi](#approfondimenti-ed-esercizi)
+  - [Approfondimenti e esercizi](#approfondimenti-e-esercizi)
 
 ---
 
-L'obiettivo principale di questo laboratorio è imparare i rudimenti dell'uso di `class` e le `struct`.
+L'obiettivo principale di questo laboratorio è imparare i rudimenti dell'uso di `class` e `struct`.
 
-Per farlo, realizzeremo una `class` (`Regression`) che, una volta inserita una serie di coppie di punti nel piano
-cartesiano, permette di calcolarne pendenza e intercetta della retta di regressione, che verranno memorizzati
-in una `struct` (`Result`).
+Per farlo, realizzeremo una `class` (`Regression`) che, una volta inserita una serie di punti nel piano cartesiano,
+permetta di calcolare pendenza e intercetta della retta di regressione, le quali verranno memorizzate in una `struct`
+(`Result`).
 
 Durante il laboratorio vi invitiamo a tenere aperte le
 [slide](https://github.com/Programmazione-per-la-Fisica/pf2024/releases/latest) presentate a lezione.
@@ -49,6 +49,7 @@ $ curl https://raw.githubusercontent.com/doctest/doctest/master/doctest/doctest.
 
 > [!TIP]
 > Verificate che il file `doctest.h` sia stato scaricato correttamente.
+>
 > Per farlo, potete verificare che l'output del comando `head` sia analogo a quello mostrato qui:
 >
 > ```bash
@@ -81,27 +82,27 @@ $ ls -A
 
 ## Retta di regressione
 
-Dato un insieme di $N$ punti nel piano cartesiano $(x_i, y_i)$, i coefficienti della retta di regressione
-$y = A + B \cdot x$ ricavabili tramite le seguenti formule:
+Dato un insieme di $N$ punti nel piano cartesiano, ciascuno rappresentato dalla coppia di coordinate $(x_i, y_i)$,
+i coefficienti della retta di regressione $y = A + B \cdot x$ sono ricavabili tramite le seguenti formule:
 
 $$ A = \frac {\sum y_{i} \sum x_{i}^{2} - \sum x_{i} \sum x_{i} y_{i}}{N \sum x_{i}^{2} - (\sum x_{i})^{2}} $$
 
 $$ B = \frac {N \sum x_{i}y_{i} - \sum x_{i} \sum y_{i}}{N \sum x_{i}^{2} - (\sum x_{i})^{2}} $$
 
 Quello che vogliamo fare è implementare in _C++_ uno strumento che calcoli questi valori, costruendo una classe
-`Regression` che permetta di gestire l'inserimento delle coordinate dei punti $(x_i, y_i)$ nel piano cartesiano e
-restituisca la coppia di valori $A$, e $B$, nascondendo i dettagli implementativi relativi alle formule utilizzate.
+`Regression` che permetta di gestire l'inserimento delle coordinate dei punti $(x_i, y_i)$ e restituisca la coppia di
+valori $A$, e $B$, nascondendo i dettagli implementativi relativi alle formule utilizzate.
 
 Inoltre vogliamo raggruppare tali risultati in un'unica _struttura dati_: `Results`.
 
 ### Definizione test della classe `Regression`
 
 Per risolvere il problema tramite l'uso di una classe, è opportuno cominciare identificando le _funzionalità minime_
-che questa deve garantire, così come _l'interfaccia_ che questa espone ad un eventuale utilizzatore.
+che questa deve garantire, così come _l'interfaccia_ che questa esporrà a un eventuale utilizzatore.
 
 Nel nostro caso serviranno:
 
-- un metodo `add` per inserire nuovi punti espressi come coordinate $(x, y)$ (aggiunti, per ora, una coppia alla volta);
+- un metodo `add` per inserire nuovi punti espressi come coordinate $(x, y)$ (aggiunti, per ora, uno alla volta);
 - un metodo `fit` che ritorni i coefficienti `A` e `B` della retta di regressione (calcolati utilizzando i punti
   inseriti fino ad un dato momento).
 
@@ -126,7 +127,7 @@ TEST_CASE("Testing Regression") {
 > Dato che confrontiamo numeri _floating-point_, possiamo usare `Approx`, in modo da tollerare eventuali errori di
 > arrotondamento.
 
-Apriamo quindi VSCode nell'area di lavoro, creiamo un nuovo file (es: `sample.cpp`) ed inseriamo il frammento di codice
+Apriamo quindi VSCode nell'area di lavoro, creiamo un nuovo file (es: `sample.cpp`)  inseriamo il frammento di codice
 riportato sopra:
 
 ```bash
@@ -204,8 +205,8 @@ In _C++_ il tutto si traduce in:
 ...
 struct Result
 {
-  double A{};
-  double B{};
+  double A{0.};
+  double B{0.};
 };
 
 class Regression
@@ -224,18 +225,18 @@ class Regression
 > **Notiamo che `fit`**:
 >
 > - non ha argomenti;
-> - per ora la sua implementazione restituisce una `struct` `Result` con i campi inizializzarti (ci preoccuperemo di
+> - per ora la sua implementazione restituisce una `struct` `Result` con i campi inizializzati (ci preoccuperemo di
 >   implementare correttamente la logica della regressione tra poco).
 
 Con queste modifiche il programma compila correttamente (provate!), **ma fallisce tutti i test**.
 
 Pensiamo quindi a come implementare i due metodi, così che **facciano quello che vogliamo**.
 
-Nel caso dell'implementazione di una classe come questa, la cosa spesso implica chiedersi: _"_cosa abbiamo bisogno di memorizzare, in termini di variabili membro (private) della classe, per raggiungere i nostri scopi?_
+Nel caso dell'implementazione di una classe come questa, la cosa spesso implica chiedersi: _cosa abbiamo bisogno di memorizzare, in termini di variabili membro (private) della classe, per raggiungere i nostri scopi?_
 
 > [!TIP]  
-> Nel nostro caso, la domanda sopra si traduce in questa: ci serve davvero mantenere in memoria tutti i punti inseriti
-> tramite il metodo `add`, per un loro utilizzo quando viene chiamato il metodo `fit`, o ci sono alternative?
+> Nel nostro caso, la domanda sopra si traduce in questa: _ci serve davvero mantenere in memoria tutti i punti inseriti
+> tramite il metodo `add`, per un loro utilizzo quando viene chiamato il metodo `fit`, o ci sono alternative?_
 
 Se si osservano attentamente le formule indicate sopra, si può notare che non c'è bisogno di farlo, ma è sufficiente
 mantenere alcuni _accumulatori_ di valori:
@@ -306,17 +307,17 @@ Se l'implementazione è corretta, entrambi i test devono essere eseguiti con suc
 Facciamo un'ultima modifica al codice della classe, dichiarando `fit` come `const` in quanto **non modifica** i dati
 membri.
 
-> [!WARNING]
+> [!IMPORTANT]
 > In generale, è **fondamentale** specificare come tali tutti i metodi della nostra classe che ci aspettiamo debbano
 > essere `const`.
 >
 > Contrariamente ai tipi primitivi, dove le azioni possibili (la lettura o la modifica del valore in essi contenuto)
 > sono evidentemente collegate al concetto di _constness_, nel caso di una classe può non risultare ovvio se ci si
 > aspetta che un metodo vada o meno a modificarne i dati membro.
-
-> [!IMPORTANT]  
 >
-> - una volta create, istanze `const` di una determinata classe possono infatti invocare solo funzioni membro `const`;
+> Notate che:
+>
+> - una volta create istanze `const` di una determinata classe, esse possono invocare solo funzioni membro `const`;
 > - un dato membro della classe non può essere modificato all'interno di un metodo `const`;
 >
 > qualora tentassimo per errore di violare queste regole, il compilatore segnalerebbe l'inconsistenza, **proteggendoci**
@@ -343,7 +344,7 @@ auto fit(Sample const &regression) {
 }
 ```
 
-ed a compilare il programma includendo e rimuovendo l'identificatore `const` nella dichiarazione di `regression`
+e a compilare il programma includendo e rimuovendo l'identificatore `const` nella dichiarazione di `regression`
 all'interno della classe `Regression`.
 
 ### Aggiungere altri test
@@ -369,12 +370,12 @@ A titolo esemplificativo, cosa vorremmo che succeda se:
 
 > [!TIP]
 > Per verificare se la retta ha pendenza verticale, possiamo sfruttare il fatto che, in questo caso, esiste una
-> relazione ben definita $\sum x_i$ e \sum x_i^$, quale?
+> relazione ben definita $\sum x_i$ e $\sum x_i^2$, quale?
 
 > [!NOTE]
 > Per gestire in modo appropriato comportamento del metodo `fit` nei casi sopra citati, possiamo avvalerci di
 > _exception_.
->
+
 > [!IMPORTANT]
 > Ricordatevi che, qualora venga sollevata una exception all'interno di una funzione, il flusso _normale_ di esecuzione
 > del programma viene alterato, pertanto non si giungerà alla parte della funzione dove questa fa il `return`
@@ -393,22 +394,24 @@ A titolo esemplificativo, cosa vorremmo che succeda se:
 > della documentazione `doctest`.
 
 Inoltre vi consigliamo di aggiungere alcuni test che utilizzano tre o più punti, possibilmente non allineati, e inserire
-nei `CHECK` i valori calcolati di `A` e `B`.
+nei `CHECK` i valori attesi di `A` e `B`.
 
 I calcoli :
 
 - si possono fare con carta e penna;
-- si può usare [WolframAlpha](https://www.wolframalpha.com);
-- si possono utilizzare i dati raccolti durante le prove del corso di _Laboratorio di Meccanica e Termodinamica_.
+- si può fare utilizzando [WolframAlpha](https://www.wolframalpha.com);
+- si possono utilizzare i dati raccolti durante le prove del corso di _Laboratorio di Meccanica e Termodinamica_ e i
+  relativi risultati.
 
 ### Utilizzo di `SUBCASE`
 
-Quando si implementano più test, specialmente se sono relativi ad un'unica classe, o insieme di funzionalità tra loro
+Quando si implementano più test, specialmente se sono relativi a un'unica classe o a un insieme di funzionalità tra loro
 collegate, è possibile esprimerli utilizzando i `SUBCASE`, così da partire sempre dalle stesse condizioni iniziali.
 
 Provate ad utilizzare i `SUBCASE` nel caso del programma implementato oggi.
 
-> :exclamation: Per una comprensione più dettagliata dei `SUBCASE`, potete consultare la
+> [!NOTE]
+> Per una comprensione più dettagliata dei `SUBCASE`, potete consultare la
 > [documentazione](https://github.com/doctest/doctest/blob/master/doc/markdown/tutorial.md#test-cases-and-subcases).
 
 ### Soluzione
@@ -452,6 +455,16 @@ $ ls
 lab3 lab3.tgz
 ```
 
-## Approfondimenti ed esercizi
+## Approfondimenti e esercizi
 
-TO BE WRITTEN
+Riportiamo qui un possibile esercizio alternativo che potete risolvere utilizzando `class` e `struct` e un approccio
+simile a quello che abbiamo imparato oggi.
+
+Si tratta del
+[terzo laboratorio proposto per questo corso durante l'A.A. 22023/2024](https://github.com/Programmazione-per-la-Fisica/labs2023/blob/main/lab3/README.md),
+che riguarda lo sviluppo di una classe che calcoli alcune statistiche (es.: media, deviazione standard, etc) a partire
+da un campione di dati inserito utilizzando un metodo `add`.
+
+Il nostro suggerimento è di leggere solo la parte iniziale relativa alla descrizione del compito e la presentazione
+delle equazioni risolutive, per poi affidarvi alla traccia "il meno possibile" e pensare da soli a come implementare la
+classe `Sample`  i relativi test.
