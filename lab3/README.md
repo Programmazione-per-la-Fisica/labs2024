@@ -23,8 +23,9 @@ classi e strutture.
 L'obiettivo principale di questo laboratorio è imparare i rudimenti dell'uso di `class` e `struct`.
 
 Per farlo, realizzeremo una `class` (`Regression`) che, una volta inserita una serie di punti nel piano cartesiano,
-permetta di calcolare pendenza e intercetta della retta di regressione, le quali verranno memorizzate in una `struct`
-(`Result`).
+permetta di calcolare pendenza e intercetta della
+[retta di regressione](https://it.wikipedia.org/wiki/Regressione_lineare),
+le quali verranno memorizzate in una `struct` (`Result`).
 
 Durante il laboratorio vi invitiamo a tenere aperte le
 [slide](https://github.com/Programmazione-per-la-Fisica/pf2024/releases/latest) presentate a lezione.
@@ -82,8 +83,8 @@ $ ls -A
 
 ## Retta di regressione
 
-Dato un insieme di $N$ punti nel piano cartesiano, ciascuno rappresentato dalla coppia di coordinate $(x_i, y_i)$,
-i coefficienti della retta di regressione $y = A + B \cdot x$ sono ricavabili tramite le seguenti formule:
+Dato un insieme di $N$ punti nel piano cartesiano, ciascuno rappresentato dalla coppia di coordinate $(x_i, y_i)$, i
+coefficienti della retta di regressione $y = A + B \cdot x$ sono ricavabili tramite le seguenti formule:
 
 $$ A = \frac {\sum y_{i} \sum x_{i}^{2} - \sum x_{i} \sum x_{i} y_{i}}{N \sum x_{i}^{2} - (\sum x_{i})^{2}} $$
 
@@ -93,7 +94,7 @@ Quello che vogliamo fare è implementare in _C++_ uno strumento che calcoli ques
 `Regression` che permetta di gestire l'inserimento delle coordinate dei punti $(x_i, y_i)$ e restituisca la coppia di
 valori $A$, e $B$, nascondendo i dettagli implementativi relativi alle formule utilizzate.
 
-Inoltre vogliamo raggruppare tali risultati in un'unica _struttura dati_: `Results`.
+Inoltre vogliamo raggruppare tali risultati in un'unica _struttura dati_: `Result`.
 
 ### Definizione test della classe `Regression`
 
@@ -106,8 +107,19 @@ Nel nostro caso serviranno:
 - un metodo `fit` che ritorni i coefficienti `A` e `B` della retta di regressione (calcolati utilizzando i punti
   inseriti fino ad un dato momento).
 
-Anche in questo caso, una buona prassi è quella di cominciare implementando
-alcuni test:
+Anche in questo caso, una buona prassi è quella di cominciare **implementando alcuni test**. Apriamo quindi VSCode
+nell'area di lavoro:
+
+```bash
+$ pwd
+/home/battilan/pf_labs/lab3
+$ code .
+```
+
+creiamo un nuovo file (es: `regression.cpp`) e inseriamo il frammento di codice proposto sotto, il quale:
+
+- aggiunge una coppia di punti di coordinate $(x_1, y_1) = (0.,1.)$ e $(x_2, y_2) = (1.,2.)$;
+- calcola e verifica i risultati (in questo caso banali) della regressione.
 
 ```c++
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
@@ -124,24 +136,18 @@ TEST_CASE("Testing Regression") {
 ```
 
 > [!IMPORTANT]
+> Se non lo state già facendo vi consigliamo di utilizzare la combinazione di
+> [tasti di scelta rapida](https://code.visualstudio.com/docs/getstarted/keybindings#_keyboard-shortcuts-editor)
+> associata alla creazione di un file vuoto in VSCode e, d'ora in poi, abituarvi a farlo con regolarità.
+
+> [!IMPORTANT]
 > Dato che confrontiamo numeri _floating-point_, possiamo usare `Approx`, in modo da tollerare eventuali errori di
 > arrotondamento.
 
-Apriamo quindi VSCode nell'area di lavoro, creiamo un nuovo file (es: `sample.cpp`)  inseriamo il frammento di codice
-riportato sopra:
-
-```bash
-$ pwd
-/home/battilan/pf_labs/lab3
-$ code .
-```
-
-> [!IMPORTANT]
-> Se non lo state già facendo vi consigliamo di utilizzare la combinazione di tasti di scelta rapida associata alla
-> creazione di un file vuoto in VSCode e, d'ora in poi, abituarvi a farlo con regolarità.
-
 Proviamo a compilare il programma, e verifichiamo attentamente i messaggi d'errore riportati.
 
+> Su Linux/WSL:
+>
 > ```bash
 > g++ sample.cpp -Wall -Wextra -o regression
 > ```
@@ -152,7 +158,8 @@ Proviamo a compilare il programma, e verifichiamo attentamente i messaggi d'erro
 > g++-14 sample.cpp -Wall -Wextra -o regression
 > ```
 
-Quello che notiamo è che il compilatore si lamenta dell'assenza della classe `Regression`.
+Quello che notiamo è che il compilatore riporta un errore relativo all’assenza della classe `Regression`, che non è
+ancora stata implementata..
 
 ### Implementazione della classe `Regression`
 
@@ -165,7 +172,7 @@ del `TEST_CASE`:
 class Regression {
 };
 
-TEST_CASE("Testing the class handling a floating point data sample") {
+TEST_CASE("Testing the class handling linear regression") {
 ...
 }
 ```
@@ -195,8 +202,8 @@ class Regression
 
 Aggiungere il metodo `fit` richiede maggiore attenzione, perché dobbiamo prima definire il tipo ritornato.
 
-Dall'uso che viene fatto di `Result`, vediamo che deve avere due dati membri pubblici, chiamati `A` e `B`, entrambi di
-tipo `double`.
+Dall’uso che viene fatto dell’oggetto `result` nel `TEST_CASE`, vediamo che deve avere due dati membri pubblici,
+chiamati `A` e `B`, entrambi di tipo `double`.
 Procediamo quindi definendo la `struct` `Result`, in modo che includa quei campi.
 
 In _C++_ il tutto si traduce in:
@@ -335,11 +342,10 @@ class Regression
 };
 ```
 
-Per verificare l'effetto dell'uso dell'identificatore `const` provate ad aggiungere la seguente funzione libera prima
-dei `TEST_CASE`:
+Per verificare l'effetto dell'uso dell'identificatore `const` provate ad aggiungere la seguente funzione libera prima dei `TEST_CASE`:
 
 ```c++
-auto fit(Sample const &regression) {
+auto fit(Regression const &regression) {
   return regression.fit();
 }
 ```
@@ -370,7 +376,7 @@ A titolo esemplificativo, cosa vorremmo che succeda se:
 
 > [!TIP]
 > Per verificare se la retta ha pendenza verticale, possiamo sfruttare il fatto che, in questo caso, esiste una
-> relazione ben definita $\sum x_i$ e $\sum x_i^2$, quale?
+> relazione ben definita tra $\sum x_i$ e $\sum x_i^2$, quale?
 
 > [!NOTE]
 > Per gestire in modo appropriato comportamento del metodo `fit` nei casi sopra citati, possiamo avvalerci di
@@ -399,9 +405,9 @@ nei `CHECK` i valori attesi di `A` e `B`.
 I calcoli :
 
 - si possono fare con carta e penna;
-- si può fare utilizzando [WolframAlpha](https://www.wolframalpha.com);
-- si possono utilizzare i dati raccolti durante le prove del corso di _Laboratorio di Meccanica e Termodinamica_ e i
-  relativi risultati.
+- si possono fare utilizzando [WolframAlpha](https://www.wolframalpha.com);
+- possono essere validati usando i dati raccolti durante le prove del corso di _Laboratorio di Meccanica e
+  Termodinamica_ e i relativi risultati.
 
 ### Utilizzo di `SUBCASE`
 
