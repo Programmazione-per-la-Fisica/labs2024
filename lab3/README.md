@@ -212,8 +212,8 @@ In _C++_ il tutto si traduce in:
 ...
 struct Result
 {
-  double A{0.};
-  double B{0.};
+  double A;
+  double B;
 };
 
 class Regression
@@ -345,7 +345,7 @@ class Regression
 Per verificare l'effetto dell'uso dell'identificatore `const` provate ad aggiungere la seguente funzione libera prima dei `TEST_CASE`:
 
 ```c++
-auto fit(Regression const &regression) {
+auto fit(Regression const& regression) {
   return regression.fit();
 }
 ```
@@ -366,7 +366,7 @@ risolvere problemi sin da subito.
 > I test definiti in questo momento andranno **ripetutamente eseguiti dopo ogni nuova modifica**, ciò permetterà di
 > verificare che nuovi problemi non appaiano durante lo sviluppo.
 
-A titolo esemplificativo, cosa vorremmo che succeda se:
+A titolo esemplificativo, cosa vorremmo che succedesse se:
 
 - chiamiamo `fit` senza aggiungere alcun punto?
 - chiamiamo `fit` dopo aver aggiunto un solo punto?
