@@ -278,11 +278,11 @@ class Regression
     ...
   }
 
-  Result fit()
+  auto fit()
   {
     double const a = ...
     double const b = ...
-    return {a, b};
+    return Result{a, b};
   }
 }
 ```
@@ -318,7 +318,7 @@ membri.
 class Regression
 {
   // ...
-  Result fit() const
+  auto fit() const
   {
     // ...
   }
