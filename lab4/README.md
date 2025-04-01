@@ -562,7 +562,7 @@ sull'elaborato per i quali è richiesto feedback** esplicito da parte dei
 docenti.
 
 La consegna deve avvenire, da parte dei singoli studenti, tramite
-[questo link](https://virtuale.unibo.it/mod/assign/view.php?id=1368321), il
+[questo link](https://virtuale.unibo.it/mod/assign/view.php?id=1652614), il
 quale prevede il solo caricamento di file `.zip` o `.tgz`.
 
 Supponendo che tutto il materiale sia nella cartella `lab4` (e supponendo di
