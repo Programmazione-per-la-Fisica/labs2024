@@ -22,8 +22,10 @@
     "SFML",
     "struct",
     "SUBCASE",
+    "sull",
     "SYSV",
-    "Wextra"
+    "Wextra",
+    "Wunused"
   ],
   "cmake.configureOnOpen": false
 }
