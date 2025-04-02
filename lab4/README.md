@@ -38,7 +38,8 @@ presentate a lezione, così come la _webpage_
 ## Area di lavoro
 
 Creiamo una nuova directory di lavoro (ad esempio `pf_labs/lab4`) e aggiungiamo
-i file `.clang-format` e `doctest.h`. Possiamo copiarli dalla cartella utilizzata per il terzo laboratorio:
+i file `.clang-format` e `doctest.h`. Possiamo copiarli dalla cartella
+utilizzata per il terzo laboratorio:
 
 ```bash
 $ pwd
@@ -48,7 +49,9 @@ $ cp ../lab3/.clang-format .
 ```
 
 > [!NOTE]
-> Se non avete seguito la nomenclatura suggerita durante i laboratori precedenti per quanto riguarda le varie directory in cui sono contenuti i file sviluppati durante i laboratori, dovrete modificare il _path_ relativo indicato sopra.
+> Se non avete seguito la nomenclatura suggerita durante i laboratori precedenti
+> per quanto riguarda le varie directory in cui sono contenuti i file sviluppati
+> durante i laboratori, dovrete modificare il _path_ relativo indicato sopra.
 
 Andiamo infine a copiare nell'area di lavoro il programma sviluppato durante il
 terzo laboratorio.
@@ -77,14 +80,18 @@ Pur svolgendo il compito che ci eravamo inizialmente prefissi, questa prima
 versione di `Regression` risulta migliorabile sotto vari aspetti, ad esempio:
 
 - un eventuale utilizzatore della classe potrebbe desiderare
-  rimuovere alcuni dei punti introdotti in precedenza
-  (es.: perché inseriti in modo incorretto, etc.);
-- potrebbe essere utile sommare assieme due campioni di punti esistenti, così da evitare di aggiungere i punti uno alla volta tramite il metodo `add(double x, double y)`, per generare il campione totale sul quale eseguire la regressione.
+  rimuovere alcuni dei punti introdotti in precedenza (ad esempio, perché
+  inseriti in modo incorretto);
+- potrebbe essere utile sommare assieme due campioni di punti esistenti, così da
+  evitare di aggiungere i punti uno alla volta tramite il metodo
+  `add(double x, double y)`, per generare il campione totale sul quale eseguire
+  la regressione.
 
 In entrambi i casi risulta necessario "ricordare" l'intero insieme dei punti che
 sono stati aggiunti tramite il metodo `add`.
 
-Per prima cosa, introduciamo una `struct Point` che contenga le coordinate `x` e `y` dei singoli punti:
+Per prima cosa, introduciamo una `struct Point` che contenga le coordinate `x` e
+`y` dei singoli punti:
 
 ```c++
 struct Point {
@@ -111,7 +118,8 @@ class Regression {
 ```
 
 > [!IMPORTANT]
-> Ogni volta che incontrerete `...` questo significa che **parti di codice sono state omesse per brevità o che vanno completate da parte vostra**.
+> Ogni volta che incontrerete `...` questo significa che **parti di codice sono
+> state omesse per brevità o che vanno completate da parte vostra**.
 
 Quando aggiungiamo una variabile membro privata, la prima cosa che dobbiamo
 chiederci è quale sia il suo impatto sull'**invariante di classe**, cioè la
@@ -149,7 +157,11 @@ concettualmente più semplice, quindi più facile da implementare e mantenere**.
 Rimuoviamo quindi tutte le variabili membro di `Regression` ad eccezione di
 `points_` e procediamo con le modifiche necessarie a `regression.test.cpp`.
 
-Scegliamo inoltre di cambiare il metodo `Regression::add` per accettare un punto al posto delle coordinate del punto. Questo cambiamento non è fondamentale, in quanto il codice funzionerebbe anche con la precedente implementazione di `Regression::add`, ma rende il codice più leggibile dato che abbiamo definito la `struct Point`:
+Scegliamo inoltre di aggiungere un secondo metodo `Regression::add` che accetti
+un punto al posto delle coordinate _x_ e _y_ del punto. Questo cambiamento non è
+fondamentale, in quanto il codice funzionerebbe anche mantenendo solamente la
+precedente implementazione di `Regression::add`, ma rende il codice più
+leggibile dato che abbiamo definito la `struct Point`:
 
 ```c++
 class Regression {
@@ -162,7 +174,12 @@ class Regression {
 }
 ```
 
-Notate che questa modifica avrebbe delle conseguenze profonde nel codice, in quanto dovremmo cambiare tutte le occorrenze del metodo `Regression::add(double x, double y)`. Per evitare questo, possiamo scegliere di mantenere anche l'interfaccia che permette l'inserimento di un punto a partire dalle coordinate, ma di implementarla a partire da `Regression::add(Point const& p)`:
+Notate che questa modifica avrebbe delle conseguenze profonde nel codice, in
+quanto dovremmo cambiare tutte le occorrenze del metodo
+`Regression::add(double x, double y)`. Per evitare questo, suggeriamo di
+mantenere anche l'interfaccia che permette l'inserimento di un punto a partire
+dalle coordinate, ma di implementarla a partire da
+`Regression::add(Point const& p)`:
 
 ```c++
 class Regression {
@@ -180,12 +197,17 @@ class Regression {
 ```
 
 > [!IMPORTANT]
-> Aggiungete dei test ulteriori per testare `Regression::add(Point const& p)`. L'implementazione viene lasciata a voi (potete prendere spunto dai test già esistenti).
+> Aggiungete dei test ulteriori per testare `Regression::add(Point const& p)`.
+> L'implementazione viene lasciata a voi (potete prendere spunto dai test già
+> esistenti).
 
 > [!IMPORTANT]
-> Perché è conveniente implementare `Regression::add(double x, double y)` a partire da `Regression::add(Point const& p)`? Discutetene tra di voi e poi chiedete conferma ai tutor o ai docenti.
+> Perché è conveniente implementare `Regression::add(double x, double y)` a
+> partire da `Regression::add(Point const& p)`? Discutetene tra di voi e poi
+> chiedete conferma ai tutor o ai docenti.
 
-A questo punto, è necessario ricalcolare le somme all'interno del metodo `Regression::fit`:
+A questo punto, è necessario ricalcolare le somme all'interno del metodo
+`Regression::fit`:
 
 ```c++
 auto fit() const {
@@ -204,26 +226,32 @@ auto fit() const {
 > L'implementazione dei cambiamenti è volutamente lasciata in uno stato parziale.
 
 **Completate voi le modifiche** e verificate che il programma compili
-e funzioni come deve prima di procedere. In particolare, **tutti i test devono risultare soddisfatti**.
+e funzioni come deve prima di procedere. In particolare, **tutti i test devono
+risultare soddisfatti**.
 
 > [!NOTE]
-> L'utilizzo dei test ci permette di compiere modifiche anche molto estese al codice, come in questo caso, senza il timore di introdurre errori.
+> L'aver sviluppato una lista completa di test ci permette di compiere modifiche
+> anche molto estese al codice, come in questo caso, senza il timore di
+> introdurre errori.
 
 ### Rimozione di un punto già inserito
 
 Come discusso poco sopra, la prima funzionalità aggiuntiva che vogliamo
-implementare è permettere di rimuovere un punto, **qualora questo risulti
-già presente nel nostro campione**.
+implementare è permettere di rimuovere un punto, **qualora questo risulti già
+presente nel nostro campione**.
 
 > [!IMPORTANT]
-> Notate che, qualora un punto risultasse inserito più volte, cioè se fossero stati inseriti due punti le cui coordinate sono `(2.,3.)` per entrambi, quello che vogliamo fare è rimuovere **un singolo punto** relativo a quelle coordinate.
+> Notate che, qualora un punto risultasse inserito più volte, ad esempio se
+> fossero stati inseriti due punti le cui coordinate sono `(2.,3.)` per
+> entrambi, quello che vogliamo fare è rimuovere **un singolo punto** relativo a
+> quelle coordinate.
 
 Seguiamo pertanto l'approccio utilizzato nel laboratorio precedente, definendo
 l'_interfaccia_ tramite la quale vogliamo rendere possibile la rimozione, ed
 andiamo ad **implementare i test prima di scrivere il codice** che la effettua.
 
-Aggiungiamo quindi alla fine della nostra lista di test il seguente
-_code snippet_:
+Aggiungiamo quindi alla fine della nostra lista di test il seguente _code
+snippet_:
 
 ```c++
 TEST_CASE("Testing Regression") {
@@ -255,7 +283,9 @@ TEST_CASE("Testing Regression") {
 ```
 
 Implicitamente, l'implementazione proposta suggerisce di aggiungere alla classe
-`Regression` una funzione membro `remove` che accetta come argomento un oggetto di tipo `Point` che rappresenta il punto da rimuovere e restituisce un booleano che indica se la rimozione è avvenuta:
+`Regression` una funzione membro `remove` che accetta come argomento un oggetto
+di tipo `Point`, il quale rappresenta il punto da rimuovere e restituisce un
+booleano che indica se la rimozione è avvenuta:
 
 ```c++
 class Regression {
@@ -298,7 +328,8 @@ risultano tutti eseguiti con successo.
 > numeri in virgola mobile, in questo caso è corretto farlo poiché non stiamo
 > comparando risultati di operazioni che potrebbero differire in funzione della
 > precisione di un calcolo.
->
+
+> [!IMPORTANT]
 > Ricordate che, dopo una chiamata al metodo `erase`, l'iteratore
 > `it` viene invalidato (così come quelli successivi), pertanto non sarà
 > possibile utilizzarlo nemmeno per l'operazione di incremento. Questo va
@@ -306,7 +337,9 @@ risultano tutti eseguiti con successo.
 
 ### Rimozione di un punto a partire dalle sue coordinate
 
-Arrivati a questo punto, potete implementare una nuova funzione `remove` che prenda come argomenti le coordinate _x_ e _y_ del punto da rimuovere invece di un oggetto di tipo `Point`.
+Arrivati a questo punto, potete implementare una nuova funzione `remove` che
+prenda come argomenti le coordinate _x_ e _y_ del punto da rimuovere invece di
+un oggetto di tipo `Point`.
 
 Come sempre, partiamo dall'implementazione dei test:
 
@@ -339,15 +372,21 @@ TEST_CASE("Testing Regression") {
 ```
 
 > [!NOTE]
-> Come già fatto per il metodo `add`, potete implementare questa funzione a  partire dalla funzione `remove(Point const& p)`.
+> Come già fatto per il metodo `add`, potete implementare questa funzione a
+> partire dalla funzione `remove(Point const& p)`.
 
-Quando avrete finito, salvate, compilate e **controllate che tutti i test siano passati con successo**.
+Quando avrete finito, salvate, compilate e **controllate che tutti i test siano
+passati con successo**.
 
 ### Confronto di oggetti di tipo `Point`
 
-Un metodo migliore per identificare se un punto vada rimosso o no è quello di ridefinire il comportamento dell'operatore `==` per oggetti di tipo `Point`, di modo da non dover confrontare ogni volta le coordinate _x_ e _y_ di due punti, ma i punti stessi.
+Un metodo migliore per identificare se un punto vada rimosso o no è quello di
+ridefinire il comportamento dell'operatore `==` per oggetti di tipo `Point`, di
+modo da non dover confrontare ogni volta le coordinate _x_ e _y_ di due punti,
+ma i punti stessi.
 
-Procediamo quindi con l'overload dell'operatore `==`, implementandolo come una funzione libera all'esterno della struct `Point`:
+Procediamo quindi con l'overload dell'operatore `==`, implementandolo come una
+funzione libera all'esterno della struct `Point`:
 
 ```c++
 ...
@@ -365,7 +404,10 @@ bool operator==(Point const& lhs, Point const& rhs)
 ```
 
 > [!IMPORTANT]
-> Perché questo approccio risulta essere migliore rispetto al controllo delle singole coordinate per determinare se un punto è uguale ad un altro? Ragionate per esempio su cosa accadrebbe al vostro codice se la struct `Point` rappresentasse punti nello spazio tridimensionale invece che su un piano.
+> Perché questo approccio risulta essere migliore rispetto al controllo delle
+> singole coordinate per determinare se un punto è uguale ad un altro?
+> Ragionate per esempio su cosa accadrebbe al vostro codice se la struct `Point`
+> rappresentasse punti nello spazio tridimensionale invece che su un piano.
 
 ## Overloading dell'operatore somma
 
@@ -429,12 +471,13 @@ Nell'implementazione appena proposta possiamo notare che:
 
 Questa scelta ci permette di evitare di effettuare una copia di `points_` ogni
 volta che viene effettuata una chiamata a `Regression::points` ma, al contempo,
-permette di garantire che attraverso questa funzione il membro privato
-`points_` non venga mai modificato.
+permette di garantire che attraverso questa funzione il membro privato `points_`
+non venga mai modificato.
 
 > [!IMPORTANT]
 > Notate come, in questo caso, entrambi i `const` vadano aggiunti assieme.
-> Provate a rimuoverne un `const` alla volta e compilate per verificare cosa succede.
+> Provate a rimuoverne un `const` alla volta e compilate per verificare cosa
+> succede.
 
 Procediamo quindi implementando una versione preliminare di `operator+`, che
 permetta di compilare con successo:
@@ -442,12 +485,12 @@ permetta di compilare con successo:
 ```c++
 Regression operator+(Regression const& l, Regression const& r) 
 { 
-  return Regression{}; 
+  Regression sum{};
+  return sum; 
 }
 ```
 
-Come potrete notare, rimangono comunque un paio di `warning`, ed il test appena
-aggiunto fallisce:
+Come potrete notare, rimangono comunque un paio di `warning`:
 
 ```bash
 $ g++ regression.test.cpp -Wall -Wextra -o regression.test
@@ -458,8 +501,11 @@ regression.test.cpp:105:40: warning: unused parameter 'l' [-Wunused-parameter]
 regression.test.cpp:105:61: warning: unused parameter 'r' [-Wunused-parameter]
   105 | Regression operator+(Regression const& l, Regression const& r) { return Regression{}; }
       |                                           ~~~~~~~~~~~~~~~~~~^
+```
 
+inoltre, il test appena aggiunto fallisce:
 
+```bash
 $ ./regression.test 
 [doctest] doctest version is "2.4.11"
 [doctest] run with "--help" for options
@@ -477,16 +523,23 @@ regression.test.cpp:217: ERROR: CHECK( sum.size() == 2 ) is NOT correct!
 
 ```
 
-In teoria, i metodi `Regression::add` e `Regression::points` sarebbero sufficienti per implementare una versione correttamente funzionante di `operator+`.
+In teoria, i metodi `Regression::add` e `Regression::points` sarebbero
+sufficienti per implementare una versione correttamente funzionante di
+`operator+`.
 
 > [!NOTE]
-> Potete provare a farlo, se arrivate a questo punto
-> dell'esercizio abbastanza presto.
+> Potete provare a farlo, se arrivate a questo punto dell'esercizio abbastanza
+> presto.
 
 Però, rispetto ad aggiungere uno ad uno tutti gli elementi sfruttando il metodo
-`Regression::add`, risulterebbe più efficiente e chiaro costruire il vettore di `points_` relativo al risultato di `operator+` utilizzando il metodo `std::vector<>::insert`. Potete consultare la documentazione relativa al metodo a questo [link](https://en.cppreference.com/w/cpp/container/vector/insert).
+`Regression::add`, risulterebbe più efficiente e chiaro costruire il vettore di
+`points_` relativo al risultato di `operator+` utilizzando il metodo
+`std::vector<>::insert`. Potete consultare la documentazione relativa al metodo
+a questo [link](https://en.cppreference.com/w/cpp/container/vector/insert).
 
-Per fare questo suggeriamo di implementare un nuovo metodo `void add(std::vector<Point> const& new_points)` che si occupi di aggiungere al vettore di `points_` un nuovo vettore di punti (qui chiamato `new points`):
+Per fare questo, suggeriamo di implementare un nuovo metodo
+`void add(std::vector<Point> const& new_points)` che si occupi di aggiungere al
+vettore di `points_` un nuovo vettore di punti (qui chiamato `new points`):
 
 ```c++
 class Regression {
@@ -501,7 +554,8 @@ class Regression {
    ...
 ```
 
-A questo punto, potete procedere con l'implementazione della funzione libera `operator+`, che viene lasciata interamente a voi:
+A questo punto, potete procedere con l'implementazione della funzione libera
+`operator+`, che viene lasciata interamente a voi:
 
 ```c++
 Regression operator+(Regression const& l, Regression const& r) 
@@ -512,14 +566,15 @@ Regression operator+(Regression const& l, Regression const& r)
 }
 ```
 
-Una volta terminata l'implementazione, salvate, compilate e **verificate che tutti i test siano soddisfatti**.
+Una volta terminata l'implementazione, salvate, compilate e **verificate che
+tutti i test siano soddisfatti**.
 
 ### Versione 2: operatore somma a partire dall'operatore membro `+=`
 
 Come discusso a lezione, è possibile implementare un generico operatore binario
-simmetrico `operator@` (definito come funzione libera) in termini di un operatore
-`@=` che sia metodo della classe per la quale cui vogliamo implementare
-`operator@`.
+simmetrico `operator@` (definito come funzione libera) in termini di un
+operatore `@=` che sia metodo della classe per la quale cui vogliamo
+implementare `operator@`.
 
 Nel nostro caso, si  tratta di aggiungere a `Regression`:
 
@@ -536,10 +591,11 @@ E di semplificare `operator+` in modo che faccia uso di `Regression::operator+=`
 
 Lasciamo a voi l'onere dell'implementazione, ma ricordate che:
 
-- `Regression::operator+=` è un metodo di `Regression`, pertanto può accedere alle sue variabili membro private;
-- `Regression::operator+=` intende modificare l'istanza della classe su cui opera,
-  pertanto potete avvalervi di `this` quando restituite il risultato della
-  funzione.
+- `Regression::operator+=` è un metodo di `Regression`, pertanto può accedere
+  alle sue variabili membro private;
+- `Regression::operator+=` intende modificare l'istanza della classe su cui
+  opera, pertanto potete avvalervi di `this` quando restituite il risultato
+  della funzione.
 
 Dopo le modifiche compilate il codice ed eseguite i test fino a quanto il
 programma funziona correttamente.
@@ -594,9 +650,13 @@ Come di consueto, riportiamo alcune possibili estensioni dell'esercizio che
 potete implementare per approfondire lo studio di alcuni concetti appresi
 durante il corso:
 
-- Utilizzare l'algoritmo `std::find` al posto del ciclo `for` nella funzione `remove` per trovare eventuali punti da rimuovere.
-- Migliorare il test relativo ad `operator+` (es.: l'ordine degli elementi del campione è irrilevante).
-- Creare un metodo `remove_all` che rimuova tutti i punti corrispondenti ad un dato set di coordinate. In particolare potete provare a implementarlo:
-  - in un modo simile a quello proposto durante il laboratorio per il metodo `remove`;
+- Utilizzare l'algoritmo `std::find` al posto del ciclo `for` nella funzione
+  `remove` per trovare eventuali punti da rimuovere.
+- Migliorare il test relativo ad `operator+` (es.: l'ordine degli elementi del
+  campione è irrilevante).
+- Creare un metodo `remove_all` che rimuova tutti i punti corrispondenti ad un
+  dato set di coordinate. In particolare potete provare a implementarlo:
+  - in un modo simile a quello proposto durante il laboratorio per il metodo
+    `remove`;
   - utilizzando l'algoritmo `remove` seguito da `erase`;
   - tramite l'utility `std::erase` (se utilizzate _C++20_).
