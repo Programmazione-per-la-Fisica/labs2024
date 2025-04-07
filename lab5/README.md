@@ -36,8 +36,7 @@ utilizzata per il quarto laboratorio:
 ```bash
 $ pwd
 /home/battilan/pf_labs/lab5
-$ cp ../lab4/doctest.h .
-$ cp ../lab4/.clang-format .
+$ cp ../lab4/{doctest.h,.clang-format} .
 ```
 
 > [!NOTE]
@@ -54,9 +53,6 @@ avete sviluppato, o scaricare la soluzione da noi proposta tramite il comando:
 
 ```bash
 $ curl https://raw.githubusercontent.com/Programmazione-per-la-Fisica/labs2024/main/lab4/soluzioni/regression.test.cpp -o regression.test.cpp
-  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
-                                 Dload  Upload   Total   Spent    Left  Speed
-100    14  100    14    0     0     50      0 --:--:-- --:--:-- --:--:--    50
 ```
 
 Fatto ciò, l'area di lavoro deve trovarsi in questo stato:
@@ -190,6 +186,7 @@ appena spostato in `regression.hpp` all'interno del `namespace`:
 
 ```c++
 namespace pf {
+
 struct Result {
   double A;
   double B;
@@ -535,8 +532,8 @@ Ricordandoci, a ogni passaggio, di **compilare e di eseguire i test**.
 > :question: Sapreste dire perché?
 
 Giunti a questo punto, abbiamo affrontato assieme tutti i problemi che possono
-incorrere durante lo spostamento delle delle diverse definizioni di
-funzioni tra `regression.hpp` a `regression.cpp`.
+incorrere durante lo spostamento delle diverse definizioni di funzioni tra
+`regression.hpp` a `regression.cpp`.
 
 **Procedete ora in autonomia** spostando il resto delle definizioni di funzione
 in `regression.cpp`.
@@ -571,12 +568,17 @@ Prima di terminare questo laboratorio, vogliamo illustrare brevemente l'utilizzo
 di [_CMake_](https://cmake.org/), strumento che semplifica la compilazione di
 progetti costituiti da più file sorgente.
 
+> [!TIP]
+> Qualora foste interessati ad approfondire lo studio di _CMake_ potete
+> consultare la guida introduttiva disponibile
+> [qui](https://crascit.com/professional-cmake/professionalcmake_20th_edition_gettingstarted/).
+
 ### Installazione di componenti aggiuntive
 
 Prima di procedere, installiamo il [_ninja build system_](https://ninja-build.org/),
 che ci permetterà di generare, contemporaneamente ed in modo consistente,
 configurazioni per la compilazione in diverse modalità (in particolare _Debug_ e
-_Release_ ) all'interno di una unica area area di _build_.
+_Release_ ) all'interno di una unica area di _build_.
 
 Procedere con l'installazione è semplice, basta eseguire il seguente comando
 in _Ubuntu 24.04_:
@@ -697,15 +699,16 @@ $ cmake --build build --config Debug
 ```
 
 Questo comando **esegue la compilazione** dell'area presente all'interno della
-cartella `build`.
+cartella `build` per la variante _Debug_. Si può procedere in modo simile per la
+variante _Release_.
 
 > [!TIP]
-> In  caso la compilazione fallisca è sufficiente modificare i file sorgente
-> (`.cpp` e `.hpp`) su cui stiamo lavorando ed eseguire di nuovo quest'ultimo
-> comando **senza configurare di nuovo l'area di compilazione**.
+> In  caso la compilazione fallisca, o qualora vengano modificati i file
+> sorgente (`.cpp` e `.hpp`) su cui stiamo lavorando, basta eseguire di nuovo
+> quest'ultimo comando **senza configurare di nuovo l'area di compilazione**.
 
 ```bash
-$ cmake --build build --target test --config Debug     
+$ cmake --build build --config Debug --target test
 Running tests...
 Test project /home/battilan/pf_labs/lab5/build
     Start 1: regression.t
