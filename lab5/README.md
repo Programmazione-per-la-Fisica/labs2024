@@ -538,6 +538,18 @@ incorrere durante lo spostamento delle diverse definizioni di funzioni tra
 **Procedete ora in autonomia** spostando il resto delle definizioni di funzione
 in `regression.cpp`.
 
+> [!IMPORTANT]
+> A questo punto è opportuno considerare che, **qualora non aiutino la
+> comprensione del codice**, i nomi dei parametri si possono omettere
+> all'interno della dichiarazione di funzione.
+>
+> Ad esempio, in `regression.hpp`, `void add(Point const& p);` può
+> tranquillamente diventare `void add(Point const&);`.
+>
+> Sperimentate in autonomia con questa possibilità.
+> :question: Per quali dichiarazioni di funzione la semplificazione vi sembra
+> opportuna, per quali ambigua?
+
 ### Riposizionamento delle direttive `#include`
 
 Per completare l'ultimo punto dell l'esercizio, andiamo a considerare
@@ -578,7 +590,7 @@ progetti costituiti da più file sorgente.
 Prima di procedere, installiamo il [_ninja build system_](https://ninja-build.org/),
 che ci permetterà di generare, contemporaneamente ed in modo consistente,
 configurazioni per la compilazione in diverse modalità (in particolare _Debug_ e
-_Release_ ) all'interno di una unica area di _build_.
+_Release_) all'interno di una unica area di _build_.
 
 Procedere con l'installazione è semplice, basta eseguire il seguente comando
 in _Ubuntu 24.04_:
