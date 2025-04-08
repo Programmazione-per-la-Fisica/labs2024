@@ -547,6 +547,7 @@ in `regression.cpp`.
 > tranquillamente diventare `void add(Point const&);`.
 >
 > Sperimentate in autonomia con questa possibilità.
+>
 > :question: Per quali dichiarazioni di funzione la semplificazione vi sembra
 > opportuna, per quali ambigua?
 
