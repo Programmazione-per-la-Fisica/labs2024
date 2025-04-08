@@ -527,7 +527,7 @@ Ricordandoci, a ogni passaggio, di **compilare e di eseguire i test**.
 > [!IMPORTANT]  
 > Notiamo come, quando spostiamo il metodo `auto fit() const`, sia necessario
 > specificare in maniera esplicita che il tipo di ritorno della funzione è
-> `Regression`.
+> `Result`.
 >
 > :question: Sapreste dire perché?
 
