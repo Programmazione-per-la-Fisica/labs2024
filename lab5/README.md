@@ -790,10 +790,8 @@ Per chi fosse interessato a "sperimentare ulteriormente" gli argomenti
 presentati in questo laboratorio, viene proposto un possibile approfondimento
 **opzionale**:
 
-Provate ad aggiungere un nuovo file `main.cpp` contenente una funzione `main`
-che usa i componenti definiti sopra.
-
-Il programma accetta dall'utente comandi:
+Provate ad estendere il file `main.cpp` scaricato poco sopra in modo da ottenere
+un programma che accetta dall'utente comandi:
 
 - `a X Y`: per aggiungere un punto (di coordinate X, Y) al campione. Ad esempio,
   per aggiungere il punto (`1.0`, `9.1`), scrivere `a 1.0 9.1`;
