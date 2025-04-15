@@ -14,6 +14,8 @@ struct Point {
   double y;
 };
 
+bool operator==(Point const& lhs, Point const& rhs);
+
 class Regression {
   std::vector<Point> points_;
 
