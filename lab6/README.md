@@ -255,7 +255,7 @@ Per farlo, procediamo dichiarando un metodo basato sull'algoritmo `std::accumula
 Dopo aver implementato i test, continuiamo con la definizione del metodo nel corrispondente file `regression.cpp`:
 
 ```c++
-#include "numeric"
+#include <numeric>
 ...
 double sum_x{
       std::accumulate(points_.begin(), points_.end(), 0., ...)};
@@ -598,7 +598,7 @@ class Regression
 > [!NOTE]
 > In questo caso, i due metodi sono _const_. Perché?
 
-e con la loro definizione in `regression.cpp`
+e con la loro ``definizione`` in `regression.cpp`
 
 ```c++
 double Regression::median_x_nth() const
