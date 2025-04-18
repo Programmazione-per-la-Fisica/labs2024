@@ -61,8 +61,9 @@ In primo luogo, menziona la cosa inviando una e-mai (dal tuo indirizzo `@studio.
 [_motivo valido_](#esiste-una-lista-di-motivi-validi-per-una-eventuale-assenza) per la tua assenza.
 
 Una volta specificata la ragione della tua assenza, sarà appannaggio dei docenti confermare la validità della
-giustificazione e specificarti come recuperare, ad esempio richiedendoti di seguire individualmente la traccia del
-laboratorio e consegnare l'elaborato, anche parziale, del lavoro svolto in autonomia.
+giustificazione e specificarti come recuperare. Tipicamente ti verrà richiesto di **svolgere individualmente la
+traccia** del laboratorio e **consegnare l'elaborato**, anche parziale, del lavoro svolto in autonomia **entro una
+settimana** dalla data in cui si è svolto il laboratorio.
 
 ## Esiste una lista di _motivi validi_ per una eventuale assenza?
 
