@@ -73,7 +73,7 @@ sportive agonistiche di alto livello, ulteriori corsi universitari o equiparati 
 **Non sono _motivi validi_**: attività sportive dilettantistiche, corsi seguiti per interesse personale, pendolarismo.
 
 In caso di dubbio in merito alla validità di una data assenza, invia una e-mai (dal tuo indirizzo `@studio.unibo.it`) a
-[tutti i docenti](https://github.com/Programmazione-per-la-Fisica#docenti) descrivendo il problema intercirso.
+[tutti i docenti](https://github.com/Programmazione-per-la-Fisica#docenti) descrivendo il problema intercorso.
 
 ## Come faccio a caricare su Virtuale l'elaborato relativo ad un dato laboratorio?
 
